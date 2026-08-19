@@ -1,0 +1,1 @@
+print("Linear regression 101 - predicting house prices")
