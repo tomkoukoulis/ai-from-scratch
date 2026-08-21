@@ -11,6 +11,8 @@ class LinearRegression:
             self.target_mse = target_mse
             self.max_epochs = max_epochs
 
+            self.min_improvement = 0.0000000000001
+
             # Model parameters initialized to zero
             self.weight: float = 1.0
             self.bias: float = 0.0
@@ -67,22 +69,33 @@ class LinearRegression:
 
     def fit(self, x: list[float], y: list[float]) -> "LinearRegression":
         """Trains the model using Gradient Descent. Returns self for method chaining."""
+
+        mse = self._calculate_mse(x, y)
+
         for epoch in range(self.max_epochs):
-            mse = self._calculate_mse(x, y)
-
-            if mse <= self.target_mse:
-                print(f"Converged at epoch {epoch} | Final MSE: {mse:.6f}")
-                break
-
             dw, db = self._calculate_gradients(x, y)
 
             self.weight -= self.learning_rate * dw
             self.bias -= self.learning_rate * db
 
+            next_mse = self._calculate_mse(x, y)
+
             # Every 500 epochs report
             if epoch % 500 == 0:
-                print(f"Epoch {epoch:4d} | MSE: {mse:.6f} | Weight: {self.weight:.4f} | Bias: {self.bias:.4f}")
+                print(f"Epoch {epoch:4d} | MSE: {next_mse:.11f} | Weight: {self.weight:.4f} | Bias: {self.bias:.4f}")
 
+            if next_mse <= self.target_mse:
+                print(f"Converged at epoch {epoch} | Final MSE: {next_mse:.11f}")
+                break
+
+            if abs(mse - next_mse) <= self.min_improvement:
+                print(f"MSE is not improving meaningfully after epoch {epoch} | Final MSE: {next_mse:.11f}")
+                break
+
+            mse = next_mse
+        else:
+            print(f"Stopped after {self.max_epochs} epochs; MSE = {mse}")
+            
         return self
 
 # =============================================================================
@@ -90,7 +103,7 @@ class LinearRegression:
 # =============================================================================
 if __name__ == "__main__":
     sizes = [1.0, 2.0, 3.0, 4.0]
-    prices = [3.0, 5.0, 7.0, 9.0]
+    prices = [3.0, 5.0, 8.0, 9.0]
 
     # Instantiate and train model
     model = LinearRegression(learning_rate=0.01)
