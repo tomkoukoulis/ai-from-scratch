@@ -89,8 +89,8 @@ class LinearRegression:
 # Execution & Testing
 # =============================================================================
 if __name__ == "__main__":
-    sizes = [1, 2, 3, 4]
-    prices = [3, 5, 7, 9]
+    sizes = [1.0, 2.0, 3.0, 4.0]
+    prices = [3.0, 5.0, 7.0, 9.0]
 
     # Instantiate and train model
     model = LinearRegression(learning_rate=0.01)
