@@ -32,3 +32,19 @@ print("Normalised:", v_hat)  # [0.6, 0.0, 0.8]
 
 ## Step 5: verify
 print("Verify magnitude:", np.linalg.norm(v_hat))  # 1.0
+
+## Normalisation removes magnitude, but preserves direction
+pasta   = np.array([3, 0, 2], dtype=float)
+spicy   = np.array([6, 0, 4], dtype=float)
+cake    = np.array([0, 8, 0], dtype=float)
+
+pasta_hat = normalise(pasta)
+spicy_hat = normalise(spicy)
+cake_hat  = normalise(cake)
+
+print("Pasta normalised:  ", np.round(pasta_hat, 4))
+print("Spicy normalised:  ", np.round(spicy_hat, 4))
+print("Cake normalised:   ", np.round(cake_hat, 4))
+
+print()
+print("Pasta == Spicy after normalisation:", np.allclose(pasta_hat, spicy_hat))
