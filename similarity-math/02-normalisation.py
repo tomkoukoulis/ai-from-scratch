@@ -48,3 +48,25 @@ print("Cake normalised:   ", np.round(cake_hat, 4))
 
 print()
 print("Pasta == Spicy after normalisation:", np.allclose(pasta_hat, spicy_hat))
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+def dot_product(a, b):
+    return np.dot(a, b)
+
+pasta   = np.array([3, 0, 2], dtype=float)
+cake    = np.array([0, 8, 0], dtype=float)
+spicy   = np.array([6, 0, 4], dtype=float)
+
+pasta_hat = normalise(pasta)
+cake_hat  = normalise(cake)
+spicy_hat = normalise(spicy)
+
+## On normalised vectors, these should be equal
+print("Cosine similarity (pasta vs cake): ", cosine_similarity(pasta_hat, cake_hat))
+print("Dot product (pasta vs cake):       ", dot_product(pasta_hat, cake_hat))
+
+print()
+print("Cosine similarity (pasta vs spicy):", cosine_similarity(pasta_hat, spicy_hat))
+print("Dot product (pasta vs spicy):      ", dot_product(pasta_hat, spicy_hat))
