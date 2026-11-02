@@ -1,5 +1,5 @@
 from pprint import pprint
-import anthropic
+import anthropic, json
 
 client = anthropic.Anthropic()
 
@@ -27,7 +27,15 @@ response = client.messages.create(
     }],
 )
 
+print("\nresponse.stop_reason:")
 print(response.stop_reason)
-for block in response.content:
-    print(block)
-pprint(response)
+
+# print("\nblock:")
+# for block in response.content:
+#     print(block)
+
+print("\nprint(response.content.model_dump_json(indent=2)):")
+print(response.content.model_dump_json(indent=2))
+
+print("\nprint(response.model_dump_json(indent=2)):")
+print(response.model_dump_json(indent=2))
